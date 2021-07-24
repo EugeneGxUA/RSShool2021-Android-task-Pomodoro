@@ -14,12 +14,17 @@ import com.egaragul.pomodoro.utils.COMMAND_ID
 import com.egaragul.pomodoro.utils.COMMAND_START
 import com.egaragul.pomodoro.utils.COMMAND_STOP
 import com.egaragul.pomodoro.utils.STARTED_TIMER_TIME_MS
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 class MainActivity : AppCompatActivity(R.layout.activity_main), TimerControlListener {
 
     private var _binding: ActivityMainBinding? = null
     private val binding: ActivityMainBinding
         get() = requireNotNull(_binding)
+
+    private val json = Json { encodeDefaults = true }
 
     private val timerAdapter = TimerAdapter(
         this
@@ -32,6 +37,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), TimerControlList
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        if (savedInstanceState != null) {
+            savedInstanceState.getString("timers")?.let {
+                val restoredTimers = json.decodeFromString<List<Timer>>(it)
+                timers.addAll(restoredTimers)
+            }
+        }
 
         provideAdapter()
         provideButtonClickListener()
@@ -131,6 +143,20 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), TimerControlList
     override fun onDestroy() {
         _binding = null
         super.onDestroy()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("timers", json.encodeToString(timers))
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        savedInstanceState.getString("timers")?.let {
+            val restoredTimers = json.decodeFromString<List<Timer>>(it)
+            timers.addAll(restoredTimers)
+        }
     }
 
 }

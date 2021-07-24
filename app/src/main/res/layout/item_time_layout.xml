@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="8dp"
+        >
+
+        <ImageView
+            android:id="@+id/iv_indicator"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:background="@drawable/blinking_circle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_timer"
+            app:layout_constraintBottom_toBottomOf="@id/tv_timer"
+            app:layout_constraintEnd_toStartOf="@id/tv_timer"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            />
+
+        <TextView
+            android:id="@+id/tv_timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="00:00:00"
+            android:textSize="32sp"
+            app:layout_constraintStart_toEndOf="@id/iv_indicator"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/v_loader"
+
+            />
+
+        <com.egaragul.pomodoro.component.LoaderView
+            android:id="@+id/v_loader"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:layout_constraintStart_toEndOf="@id/tv_timer"
+            app:layout_constraintTop_toTopOf="@id/tv_timer"
+            app:layout_constraintBottom_toBottomOf="@id/tv_timer"
+            app:layout_constraintEnd_toStartOf="@id/btn_start_stop"
+            />
+
+        <Button
+            android:id="@+id/btn_start_stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="@string/start"
+            android:text="@string/start"
+            app:layout_constraintStart_toEndOf="@id/v_loader"
+            app:layout_constraintTop_toTopOf="@id/tv_timer"
+            app:layout_constraintBottom_toBottomOf="@id/tv_timer"
+            app:layout_constraintEnd_toStartOf="@id/btn_delete"
+            />
+
+        <ImageButton
+            android:id="@+id/btn_delete"
+            android:padding="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_delete"
+            app:layout_constraintStart_toEndOf="@id/btn_start_stop"
+            app:layout_constraintTop_toTopOf="@id/tv_timer"
+            app:layout_constraintBottom_toBottomOf="@id/tv_timer"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
